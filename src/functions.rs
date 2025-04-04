@@ -48,6 +48,10 @@ pub fn kramer(a: &Vec<Vec<f32>>, b: &Vec<f32>) -> (f32, f32, f32) {
     println!("Детермінант для a_3: {}", det_a_3);
     println!("---------------------");
 
+    if det_a_1.abs() < f32::EPSILON || det_a_2.abs() < f32::EPSILON || det_a_3.abs() < f32::EPSILON {
+        panic!("Система не має унікального розв'язку або має безліч розв'язків");
+    }
+
     let x1 = det_a_1 / det_main;
     let x2 = det_a_2 / det_main;
     let x3 = det_a_3 / det_main;
@@ -68,7 +72,7 @@ pub fn obern_matr(a: &Vec<Vec<f32>>, b: &Vec<f32>) -> (f32, f32, f32) {
     let det_main = det(a);
 
     if det_main.abs() < f32::EPSILON {
-        panic!("Система не має унікального розв'язку (детермінант дорівнює нулю)");
+        panic!("Система не має унікального розв'язку");
     }
 
     println!("\nДетермінант основної матриці: {}", det_main);
@@ -128,6 +132,7 @@ pub fn obern_matr(a: &Vec<Vec<f32>>, b: &Vec<f32>) -> (f32, f32, f32) {
     println!("=====================");
     (result[0], result[1], result[2])
 }
+
 
 fn minor(a: &Vec<Vec<f32>>, row: usize, col: usize) -> f32 {
     let mut m = Vec::new();
